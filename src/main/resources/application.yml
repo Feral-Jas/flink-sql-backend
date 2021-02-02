@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    dm:
+      jdbc-url: jdbc:dm://10.10.133.220:5236/CSSFLINK
+      username: CSSFLINK
+      password: 1234567890
+      driver-class-name: dm.jdbc.driver.DmDriver
+
+  jpa:
+    properties.hibernate.dialect:
+      com.css.DmDialect.DmDialect
