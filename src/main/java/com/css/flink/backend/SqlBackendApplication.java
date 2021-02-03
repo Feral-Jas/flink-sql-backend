@@ -10,9 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SqlBackendApplication {
 
     public static void main(String[] args) {
-
         SpringApplication.run(SqlBackendApplication.class, args);
-
     }
 
 }
