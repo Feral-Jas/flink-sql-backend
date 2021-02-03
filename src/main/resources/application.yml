@@ -11,6 +11,8 @@ spring:
   jpa:
     properties.hibernate.dialect:
       org.hibernate.dialect.DmDialect
+    hibernate:
+      ddl-auto: update
 
 flink:
   sql.launcher.path: "file:///Users/liuchenyu/IdeaProjects/flinkStreamSQL/lib/sql.launcher-1.0-SNAPSHOT.jar"
