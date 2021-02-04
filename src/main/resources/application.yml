@@ -8,11 +8,13 @@ spring:
       password: 1234567890
       driver-class-name: dm.jdbc.driver.DmDriver
 
+
   jpa:
     properties.hibernate.dialect:
       org.hibernate.dialect.DmDialect
     hibernate:
       ddl-auto: update
+    show-sql: true
 
 flink:
   sql.launcher.path: "file:///Users/liuchenyu/IdeaProjects/flinkStreamSQL/lib/sql.launcher-1.0-SNAPSHOT.jar"

@@ -1,11 +1,12 @@
 package com.css.flink.backend.job.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.Value;
+import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -20,26 +21,59 @@ import java.util.UUID;
 @Setter
 @Table(name = "JOB_INFO")
 public class Job {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column(name = "uuid",unique = true)
     private String uuid;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "sql")
     private String sql;
+
     @Column(name = "description")
     private String description;
-    @Column(name = "created_time")
-    private LocalDateTime createdTime;
-    @Column(name = "modified_time")
-    private LocalDateTime modifiedTime;
 
+    @Column(name = "created_time")
+    @CreatedDate
+    private Date createdTime;
+
+    @Column(name = "modified_time")
+    @LastModifiedDate
+    private Date modifiedTime;
+
+    /**
+     * CREATE/EDIT JOB Constructor
+     * @param name
+     * @param sql
+     * @param description
+     */
     public Job(String name,String sql, String description) {
         this.uuid = UUID.randomUUID().toString();
         this.name = name;
         this.sql = sql;
         this.description = description;
-        this.createdTime = LocalDateTime.now();
+    }
+
+    public Job(String jobId) {
+        this.uuid = jobId;
+    }
+
+    public boolean hasUuid(){
+        return uuid==null;
+    }
+    @Override
+    public String toString() {
+        return "Job{" +
+                "uuid='" + uuid + '\'' +
+                ", name='" + name + '\'' +
+                ", sql='" + sql + '\'' +
+                ", description='" + description + '\'' +
+                ", createdTime=" + createdTime +
+                ", modifiedTime=" + modifiedTime +
+                '}';
     }
 }
