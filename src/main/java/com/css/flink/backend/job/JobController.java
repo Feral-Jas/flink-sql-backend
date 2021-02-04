@@ -2,10 +2,13 @@ package com.css.flink.backend.job;
 
 import com.css.flink.backend.job.model.Job;
 import com.google.common.collect.Maps;
+import org.hibernate.hql.internal.ast.tree.ResolvableNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 
 
@@ -56,4 +59,11 @@ public class JobController {
                 ));
     }
 
+    @PostMapping("/jobs/{jobId}/run")
+    public Mono<ResponseEntity> runJob(@PathVariable String jobId){
+        return Mono.just(ResponseEntity
+                .of(Optional.of(
+                        jobService.executeJob(jobId)
+                )));
+    }
 }

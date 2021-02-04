@@ -3,10 +3,13 @@ package com.css.flink.backend.job;
 import com.css.flink.backend.job.model.Job;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 /**
@@ -18,7 +21,8 @@ import java.util.Map;
 public class JobService {
 
     private final JobRepository jobRepository;
-
+    @Value(value = "${flink.entry}")
+    private String flinkConf;
     @Autowired
     public JobService(JobRepository jobRepository){
         this.jobRepository = jobRepository;
@@ -40,10 +44,17 @@ public class JobService {
         return resultMap;
     }
 
-    public Object delete(String jobId) {
+    public Map delete(String jobId) {
         HashMap<String, Object> resultMap = Maps.newHashMap();
         jobRepository.delete(new Job(jobId));
         resultMap.put("deleted",jobId);
         return resultMap;
     }
+    public Map executeJob(String jobId){
+        Optional<Job> one = jobRepository.findOne(Example.of(new Job(jobId)));
+        HashMap<String, Object> resultMap = Maps.newHashMap();
+        resultMap.put("entry",flinkConf);
+        return resultMap;
+    }
+    //public
 }
