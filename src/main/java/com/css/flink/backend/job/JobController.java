@@ -64,4 +64,12 @@ public class JobController {
                         result.entrySet()
                 )));
     }
+
+    @PostMapping("/jobs/run")
+    public ResponseEntity runJobSync(){
+        return ResponseEntity
+                .of(Optional.of(
+                        jobService.executeJob("jobId")
+                ));
+    }
 }

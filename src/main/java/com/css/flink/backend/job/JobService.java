@@ -7,6 +7,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -21,8 +26,10 @@ import java.util.Optional;
 public class JobService {
 
     private final JobRepository jobRepository;
+
     @Value(value = "${flink.entry}")
     private String flinkConf;
+
     @Autowired
     public JobService(JobRepository jobRepository){
         this.jobRepository = jobRepository;
@@ -53,8 +60,23 @@ public class JobService {
     public Map executeJob(String jobId){
         Optional<Job> one = jobRepository.findOne(Example.of(new Job(jobId)));
         HashMap<String, Object> resultMap = Maps.newHashMap();
-        resultMap.put("entry",flinkConf);
+        String s = runJob();
+        resultMap.put("res",s);
         return resultMap;
     }
-    //public
+
+    public String runJob(){
+        Object invokeResult =null;
+        try {
+            URLClassLoader child = new URLClassLoader(
+                    new URL[] {new URL("file:///Users/liuchenyu/IdeaProjects/flinkStreamSQL/lib/sql.launcher-1.0-SNAPSHOT.jar")});
+            Class<?> clazz = Class.forName("com.dtstack.flink.sql.launcher.LauncherMain", true, child);
+            Method mainEntry = clazz.getMethod("main", String[].class);
+            invokeResult = mainEntry.invoke(null, (Object) new String[]{"/Users/liuchenyu/Desktop/work/FlinkSqlExecutor/jobs/kafka2kafka/kafka2kafka.json"});
+
+        } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException | MalformedURLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return invokeResult.toString();
+    }
 }
