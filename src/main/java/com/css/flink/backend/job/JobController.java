@@ -14,6 +14,7 @@ import java.util.concurrent.CompletableFuture;
  * @description used for sql job api end point
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class JobController {
 
     private final JobService jobService;
