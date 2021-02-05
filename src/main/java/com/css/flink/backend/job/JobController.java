@@ -51,7 +51,8 @@ public class JobController {
     @DeleteMapping("/jobs/{jobId}")
     public ResponseEntity deleteJob(@PathVariable String jobId){
         return ResponseEntity
-                .of(Optional.of(
+                .of(Optional
+                        .ofNullable(
                         jobService.delete(jobId)
                 ));
     }

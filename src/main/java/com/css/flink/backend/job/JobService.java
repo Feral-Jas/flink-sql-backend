@@ -73,7 +73,6 @@ public class JobService {
             Class<?> clazz = Class.forName("com.dtstack.flink.sql.launcher.LauncherMain", true, child);
             Method mainEntry = clazz.getMethod("main", String[].class);
             invokeResult = mainEntry.invoke(null, (Object) new String[]{"/Users/liuchenyu/Desktop/work/FlinkSqlExecutor/jobs/kafka2kafka/kafka2kafka.json"});
-
         } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException | MalformedURLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
