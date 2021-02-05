@@ -19,3 +19,15 @@ spring:
 flink:
   sql.launcher.path: "file:///Users/liuchenyu/IdeaProjects/flinkStreamSQL/lib/sql.launcher-1.0-SNAPSHOT.jar"
   entry: "com.dtstack.flink.sql.launcher.LauncherMain"
+
+command:
+  mode: standalone
+  localSqlPluginPath: C:/users/marshal/Desktop/s/FlinkSQLExecutor/sqlplugins
+  remoteSqlPluginPath: /mnt/c/Users/marshal/Desktop/share/flinkSQLExecution/sqlplugins
+  flinkconf: C:/Users/marshal/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc/LocalState/rootfs/home/marshal/flink/flink-1.11.2/conf
+  flinkJarPath: /mnt/c/Users/marshal/Desktop/share/flinkSQLExecution/lib
+  pluginLoadMode: classpath
+  planner: blink
+StartUpPara:
+  launcherJar: file:///C:\Users\marshal\Desktop\share\flinkSQLExecution\lib\sql.launcher-1.0-SNAPSHOT.jar
+  startUpClass: com.dtstack.flink.sql.launcher.LauncherMain

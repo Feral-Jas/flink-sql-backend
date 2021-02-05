@@ -4,9 +4,9 @@ import com.css.flink.backend.job.model.Job;
 import com.google.common.collect.Maps;
 import org.hibernate.hql.internal.ast.tree.ResolvableNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
 
 import javax.swing.text.html.Option;
 import java.util.*;
@@ -21,13 +21,14 @@ import java.util.*;
 public class JobController {
 
     private final JobService jobService;
+
     @Autowired
-    public JobController(JobService jobService){
+    public JobController(JobService jobService) {
         this.jobService = jobService;
     }
 
     @GetMapping("/jobs")
-    public ResponseEntity findJob(){
+    public ResponseEntity findJob() {
         return ResponseEntity
                 .of(Optional.of(
                         jobService.findAll()
@@ -35,7 +36,7 @@ public class JobController {
     }
 
     @PostMapping("/jobs")
-    public ResponseEntity createJob(@RequestBody Job job){
+    public ResponseEntity createJob(@RequestBody Job job) {
         return ResponseEntity
                 .of(Optional.of(
                         jobService.save(job)
@@ -43,7 +44,7 @@ public class JobController {
     }
 
     @PutMapping("/jobs/{jobId}")
-    public ResponseEntity editJob(@RequestBody Job job, @PathVariable String jobId){
+    public ResponseEntity editJob(@RequestBody Job job, @PathVariable String jobId) {
         job.setUuid(jobId);
         return ResponseEntity
                 .of(Optional.of(
@@ -52,18 +53,18 @@ public class JobController {
     }
 
     @DeleteMapping("/jobs/{jobId}")
-    public ResponseEntity deleteJob(@PathVariable String jobId){
+    public ResponseEntity deleteJob(@PathVariable String jobId) {
         return ResponseEntity
                 .of(Optional.of(
                         jobService.delete(jobId)
                 ));
     }
 
-    @PostMapping("/jobs/{jobId}/run")
-    public Mono<ResponseEntity> runJob(@PathVariable String jobId){
-        return Mono.just(ResponseEntity
+    @PostMapping("/jobs/run")
+    public ResponseEntity runJobs(@RequestBody Job job) {
+        return ResponseEntity
                 .of(Optional.of(
-                        jobService.executeJob(jobId)
-                )));
+                        jobService.runJob(job)
+                ));
     }
 }
