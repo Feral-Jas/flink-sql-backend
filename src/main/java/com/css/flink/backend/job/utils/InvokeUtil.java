@@ -22,7 +22,7 @@ public class InvokeUtil {
             url = new URL(launcherJar);
             URLClassLoader urlClassLoader=new URLClassLoader(new URL[]{url});
             Class<?> clazz = urlClassLoader.loadClass(startUpClass);
-            Method method = clazz.getMethod("main",String[].class);
+            Method method = clazz.getMethod("mainReturnJobId",String[].class);
             String invoke = (String) method.invoke(null, (Object) command.split(" "));
             return invoke;
         } catch (Exception e) {

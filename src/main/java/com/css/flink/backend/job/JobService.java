@@ -5,6 +5,7 @@ import com.css.flink.backend.job.utils.InvokeUtil;
 import com.css.flink.backend.job.utils.StartCommandUtil;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Example;
@@ -65,7 +66,7 @@ public class JobService {
     public String runJob(Job job){
         String startCommand =startCommandUtil.getCommand(job.getName(),job.getSql());
         String jobId = invokeUtil.run(startCommand);
-        Gson gson=new Gson();
+        Gson gson=new GsonBuilder().setPrettyPrinting().create();
         map.put("jobId",jobId);
         return gson.toJson(map);
     }
