@@ -1,5 +1,8 @@
 package com.css.flink.backend.job.utils;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -7,13 +10,18 @@ import java.net.URLClassLoader;
 /**
  * @author marshal
  */
+@Component
 public class InvokeUtil {
-    public static String run(String command){
+    @Value("${StartUpPara.launcherJar}")
+    public String launcherJar;
+    @Value("${StartUpPara.startUpClass}")
+    public String startUpClass;
+    public String run(String command){
         URL url = null;
         try {
-            url = new URL("file:///C:\\Users\\marshal\\Desktop\\share\\flinkSQLExecution\\lib\\sql.launcher-1.0-SNAPSHOT.jar");
+            url = new URL(launcherJar);
             URLClassLoader urlClassLoader=new URLClassLoader(new URL[]{url});
-            Class<?> clazz = urlClassLoader.loadClass("com.dtstack.flink.sql.launcher.LauncherMain");
+            Class<?> clazz = urlClassLoader.loadClass(startUpClass);
             Method method = clazz.getMethod("main",String[].class);
             String invoke = (String) method.invoke(null, (Object) command.split(" "));
             return invoke;

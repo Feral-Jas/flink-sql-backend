@@ -1,25 +1,20 @@
 server:
   port: 8093
-
 spring:
   datasource:
       url: jdbc:dm://10.10.133.220:5236/CSSFLINK
       username: CSSFLINK
       password: 1234567890
       driver-class-name: dm.jdbc.driver.DmDriver
-
-
   jpa:
     properties.hibernate.dialect:
       org.hibernate.dialect.DmDialect
     hibernate:
       ddl-auto: update
     show-sql: true
-
 flink:
   sql.launcher.path: "file:///Users/liuchenyu/IdeaProjects/flinkStreamSQL/lib/sql.launcher-1.0-SNAPSHOT.jar"
   entry: "com.dtstack.flink.sql.launcher.LauncherMain"
-
 command:
   mode: standalone
   localSqlPluginPath: C:/users/marshal/Desktop/s/FlinkSQLExecutor/sqlplugins

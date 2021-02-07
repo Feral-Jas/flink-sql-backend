@@ -2,6 +2,7 @@ package com.css.flink.backend.job.utils;
 
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -16,6 +17,7 @@ import java.util.Map;
  * @Author: GS
  * @DATE: 2021/2/04 14:03
  */
+@Component
 public class StartCommandUtil {
     @Value("${command.mode}")
     public String mode;
