@@ -1,15 +1,12 @@
 package com.css.flink.backend.job;
 
 import com.css.flink.backend.job.model.Job;
-import com.google.common.collect.Maps;
-import org.hibernate.hql.internal.ast.tree.ResolvableNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.swing.text.html.Option;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 
 /**
@@ -18,6 +15,7 @@ import java.util.*;
  * @description used for sql job api end point
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class JobController {
 
     private final JobService jobService;
@@ -55,16 +53,27 @@ public class JobController {
     @DeleteMapping("/jobs/{jobId}")
     public ResponseEntity deleteJob(@PathVariable String jobId) {
         return ResponseEntity
-                .of(Optional.of(
+                .of(Optional
+                        .ofNullable(
                         jobService.delete(jobId)
                 ));
     }
+
 
     @PostMapping("/jobs/run")
     public ResponseEntity runJobs(@RequestBody Job job) {
         return ResponseEntity
                 .of(Optional.of(
                         jobService.runJob(job)
+                ));
+
+    }
+
+    @PostMapping("/jobs/run")
+    public ResponseEntity runJobSync(){
+        return ResponseEntity
+                .of(Optional.of(
+                        jobService.executeJob("jobId")
                 ));
     }
 }
