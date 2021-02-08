@@ -1,7 +1,11 @@
 package com.css.flink.backend.job;
 
 import com.css.flink.backend.job.model.Job;
+import com.css.flink.backend.job.utils.InvokeUtil;
+import com.css.flink.backend.job.utils.StartCommandUtil;
 import com.google.common.collect.Maps;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Example;
@@ -24,13 +28,17 @@ import java.util.Optional;
  */
 @Service
 public class JobService {
-
     private final JobRepository jobRepository;
+
+    Map<String,String> map=new HashMap<>(1);
 
     @Value(value = "${flink.entry}")
     private String flinkConf;
 
     @Autowired
+    private StartCommandUtil startCommandUtil;
+    @Autowired
+    private InvokeUtil invokeUtil;
     public JobService(JobRepository jobRepository){
         this.jobRepository = jobRepository;
     }
@@ -65,17 +73,12 @@ public class JobService {
         return resultMap;
     }
 
-    public String runJob(){
-        Object invokeResult =null;
-        try {
-            URLClassLoader child = new URLClassLoader(
-                    new URL[] {new URL("file:///Users/liuchenyu/IdeaProjects/flinkStreamSQL/lib/sql.launcher-1.0-SNAPSHOT.jar")});
-            Class<?> clazz = Class.forName("com.dtstack.flink.sql.launcher.LauncherMain", true, child);
-            Method mainEntry = clazz.getMethod("main", String[].class);
-            invokeResult = mainEntry.invoke(null, (Object) new String[]{"/Users/liuchenyu/Desktop/work/FlinkSqlExecutor/jobs/kafka2kafka/kafka2kafka.json"});
-        } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException | MalformedURLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return invokeResult.toString();
+    public String runJob(Job job){
+        String startCommand =startCommandUtil.getCommand(job.getName(),job.getSql());
+        String jobId = invokeUtil.run(startCommand);
+        Gson gson=new GsonBuilder().setPrettyPrinting().create();
+        map.put("jobId",jobId);
+        return gson.toJson(map);
+
     }
 }
