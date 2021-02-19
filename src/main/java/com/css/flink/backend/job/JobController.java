@@ -1,14 +1,9 @@
 package com.css.flink.backend.job;
 
 import com.css.flink.backend.job.model.Job;
-import com.google.common.collect.Maps;
-import org.hibernate.hql.internal.ast.tree.ResolvableNode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.swing.text.html.Option;
 import java.util.*;
 
 
@@ -18,6 +13,7 @@ import java.util.*;
  * @description used for sql job api end point
  */
 @RestController
+@CrossOrigin
 public class JobController {
 
     private final JobService jobService;

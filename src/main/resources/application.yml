@@ -23,6 +23,6 @@ command:
   flinkJarPath: /mnt/c/Users/marshal/Desktop/share/flinkSQLExecution/lib
   pluginLoadMode: classpath
   planner: blink
-StartUpPara:
-  launcherJar: file:///C:\Users\marshal\Desktop\share\flinkSQLExecution\lib\sql.launcher-1.0-SNAPSHOT.jar
-  startUpClass: com.dtstack.flink.sql.launcher.LauncherMain
+startupparam:
+  launcher: file:///C:\Users\marshal\Desktop\share\flinkSQLExecution\lib\sql.launcher-1.0-SNAPSHOT.jar
+  entry: com.dtstack.flink.sql.launcher.LauncherMain

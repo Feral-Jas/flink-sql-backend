@@ -1,8 +1,12 @@
 package com.css.flink.backend.job.utils;
 
 
+import com.css.flink.backend.job.model.Config;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -33,10 +37,7 @@ public class StartCommandUtil {
     public String pluginLoadMode;
     @Value("${command.planner}")
     public String planner;
-    @Value("${StartUpPara.launcherJar}")
-    public String launcherJar;
-    @Value("${StartUpPara.startUpClass}")
-    public String startUpClass;
+    @Value("${startupparam.launcher}")
     public String getCommand(String name, String sql) {
         Map<String,String> map=new HashMap<>(9);
         String value= null;
@@ -48,12 +49,12 @@ public class StartCommandUtil {
         map.put("mode",mode);
         map.put("name",name);
         map.put("sql",value);
-        map.put("localSqlPluginPath", localSqlPluginPath);
+        map.put("localSqlPluginPath",localSqlPluginPath);
         map.put("remoteSqlPluginPath",remoteSqlPluginPath);
         map.put("flinkconf",flinkconf);
         map.put("flinkJarPath", flinkJarPath);
         map.put("pluginLoadMode",pluginLoadMode);
-        map.put("planner", planner);
+        map.put("planner",planner);
         String startCommand="";
         for (Map.Entry<String, String> entry : map.entrySet()) {
             startCommand+="-"+entry.getKey()+" "+entry.getValue()+" ";

@@ -24,17 +24,17 @@ import java.util.Optional;
 @Service
 public class JobService {
     private final JobRepository jobRepository;
+    @Autowired
+    private StartCommandUtil startCommandUtil;
     Map<String,String> map=new HashMap<>(1);
     @Value(value = "${flink.entry}")
     private String flinkConf;
-    @Autowired
-    private StartCommandUtil startCommandUtil;
+
     @Autowired
     private InvokeUtil invokeUtil;
     public JobService(JobRepository jobRepository){
         this.jobRepository = jobRepository;
     }
-
     public Map findAll() {
         HashMap<String, Object> resultMap = Maps.newHashMap();
         resultMap.put("jobs",jobRepository.findAll());
