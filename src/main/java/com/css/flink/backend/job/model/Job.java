@@ -76,4 +76,11 @@ public class Job {
                 ", modifiedTime=" + modifiedTime +
                 '}';
     }
+    public String toJson(){
+        return "{\n" +
+                "    \"name\":"+name+",\n" +
+                "    \"sql\":"+sql+",\n" +
+                "    \"description\":"+description+"\n" +
+                "}";
+    }
 }
