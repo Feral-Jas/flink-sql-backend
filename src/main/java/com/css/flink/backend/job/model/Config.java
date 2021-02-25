@@ -20,8 +20,11 @@ public class Config {
     public String flinkconf;
     @Value("${submit.flinkJarPath}")
     public String flinkJarPath;
+    @Value("${submit.planner}")
+    public String planner;
     @Value("${startupparam.launcher}")
     public String launcher;
     @Value("${startupparam.entry}")
     public String entry;
+
 }

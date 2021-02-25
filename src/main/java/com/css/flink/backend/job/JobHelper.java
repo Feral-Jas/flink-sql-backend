@@ -39,6 +39,7 @@ public class JobHelper {
         map.put("remoteSqlPluginPath",config.remoteSqlPluginPath);
         map.put("flinkconf",config.flinkconf);
         map.put("flinkJarPath", config.flinkJarPath);
+        map.put("planner", config.planner);
         String startCommand="";
         for (Map.Entry<String, String> entry : map.entrySet()) {
             startCommand+="-"+entry.getKey()+" "+entry.getValue()+" ";
