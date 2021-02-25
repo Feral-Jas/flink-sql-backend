@@ -30,8 +30,4 @@ public class MethodInvokeTests {
         mainEntry.invoke(null, (Object) new String[]{"/Users/liuchenyu/Desktop/work/FlinkSqlExecutor/jobs/kafka2kafka/kafka2kafka.json"});
     }
 
-    @Test
-    public void runJobTest(){
-        jobService.runJob();
-    }
 }
